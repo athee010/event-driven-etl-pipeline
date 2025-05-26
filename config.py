@@ -1,12 +1,16 @@
 # config.py
 
-# PostgreSQL Database Config
-DB_HOST = "your-db-host"
-DB_NAME = "your-db-name"
-DB_USER = "your-db-user"
-DB_PASSWORD = "your-db-password"
+# Load secrets 
+secrets = get_secret('your-secret-name')
 
-# AWS S3 Config
-BUCKET = "your-bucket"
-PREFIX = "your/prefix/"  # e.g., "uploads/"
-LIMIT = 10  # Max number of files to process per run
+# DB connection using secrets
+conn = psycopg2.connect(
+    host=secrets['host'],
+    dbname=secrets['dbname'],
+    user=secrets['user'],
+    password=secrets['password']
+)
+
+# S3 config using secrets
+BUCKET = secrets['bucket']
+PREFIX = secrets['prefix']
